@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:crenno_study_case/core/network/errors/app_exception.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/policy.dart';
@@ -9,8 +10,8 @@ part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   DashboardBloc({required GetPolicies getPolicies})
-      : _getPolicies = getPolicies,
-        super(const DashboardState()) {
+    : _getPolicies = getPolicies,
+      super(const DashboardState()) {
     on<DashboardPoliciesRequested>(_onPoliciesRequested);
   }
 
@@ -37,7 +38,14 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
           errorMessage: null,
         ),
       );
-    } catch (error) {
+    } on AppException catch (error) {
+      emit(
+        state.copyWith(
+          status: DashboardStatus.error,
+          errorMessage: error.message,
+        ),
+      );
+    } catch (_) {
       emit(
         state.copyWith(
           status: DashboardStatus.error,

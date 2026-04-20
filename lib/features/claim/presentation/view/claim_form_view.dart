@@ -9,6 +9,7 @@ import 'package:crenno_study_case/features/dashboard/domain/entities/policy.dart
 import 'package:crenno_study_case/features/dashboard/domain/usecases/submit_claim.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ClaimFormView extends StatelessWidget {
   const ClaimFormView({
@@ -37,11 +38,7 @@ class ClaimFormView extends StatelessWidget {
           listener: (context, state) {
             if (state.status == ClaimFormStatus.success &&
                 state.successMessage != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: CustomText(text: state.successMessage!, tr: false),
-                ),
-              );
+              context.go('/');
             }
 
             if (state.status == ClaimFormStatus.error &&

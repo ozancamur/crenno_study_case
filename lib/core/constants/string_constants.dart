@@ -1,28 +1,30 @@
 final class StringConstants {
   const StringConstants._();
 
-  static const String appTitle = 'app_title';
-  static const String dashboardTitle = 'dashboard_title';
-  static const String dashboardEmptyTitle = 'dashboard_empty_title';
-  static const String dashboardEmptyDescription = 'dashboard_empty_description';
-  static const String dashboardErrorTitle = 'dashboard_error_title';
-  static const String dashboardErrorDescription = 'dashboard_error_description';
-  static const String commonRefresh = 'common_refresh';
-  static const String commonTryAgain = 'common_try_again';
-  static const String commonEnglish = 'common_english';
-  static const String commonTurkish = 'common_turkish';
-  static const String claimFormTitle = 'claim_form_title';
-  static const String claimPolicyLabel = 'claim_policy_label';
-  static const String claimSelectIncidentDate = 'claim_select_incident_date';
-  static const String claimIncidentDateRequired =
-      'claim_incident_date_required';
-  static const String claimIncidentDescriptionLabel =
-      'claim_incident_description_label';
+  static const String appTitle = 'Insurance App MVP';
+
+  static const String dashboardTitle = 'My Policies';
+  static const String dashboardEmptyTitle = 'No policy found';
+  static const String dashboardEmptyDescription =
+      'There is no active insurance policy for this account.';
+  static const String dashboardErrorTitle = 'Something went wrong';
+  static const String dashboardErrorDescription =
+      'Policies could not be loaded.';
+
+  static const String commonRefresh = 'Refresh';
+  static const String commonTryAgain = 'Try again';
+
+  static const String claimFormTitle = 'Submit Damage Claim';
+  static const String claimPolicyLabel = 'Policy';
+  static const String claimSelectIncidentDate = 'Select incident date';
+  static const String claimIncidentDateRequired = 'Incident date is required.';
+  static const String claimIncidentDescriptionLabel = 'Incident description';
   static const String claimIncidentDescriptionRequired =
-      'claim_incident_description_required';
-  static const String claimSubmitButton = 'claim_submit_button';
-  static const String policyTitle = 'policy_title';
-  static const String policyStartDate = 'policy_start_date';
-  static const String policyEndDate = 'policy_end_date';
-  static const String policyCoverage = 'policy_coverage';
+      'Incident description is required.';
+  static const String claimSubmitButton = 'Submit Claim';
+
+  static const String policyTitle = 'Policy';
+  static const String policyStartDate = 'Start date';
+  static const String policyEndDate = 'End date';
+  static const String policyCoverage = 'Coverage';
 }

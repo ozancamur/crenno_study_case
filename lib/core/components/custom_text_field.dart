@@ -1,4 +1,3 @@
-import 'package:crenno_study_case/core/utils/string_extension.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -25,11 +24,9 @@ class CustomTextField extends StatelessWidget {
       onChanged: onChanged,
       maxLines: maxLines,
       decoration: InputDecoration(
-        labelText: translateLabel ? label.translate : label,
+        labelText: label,
         border: const OutlineInputBorder(),
-        errorText: errorText == null
-            ? null
-            : (translateErrorText ? errorText!.translate : errorText),
+        errorText: errorText,
       ),
     );
   }

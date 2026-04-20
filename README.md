@@ -14,7 +14,7 @@ Selected stack:
 
 - State management: `bloc` / `flutter_bloc`
 - Routing: `go_router`
-- Networking simulation: `dio` + custom interceptor
+- Networking: `dio`
 
 ## Features
 
@@ -26,15 +26,6 @@ Selected stack:
   - incident description field
   - required field validation
   - success/error feedback
-
-## Mock API strategy
-
-A `Dio` interceptor in `lib/core/network/dio.dart` simulates backend behavior:
-
-- `GET /policies` returns `assets/mocks/policies.json`
-- `POST /claims` returns success by default
-- If description contains `error`, API returns a simulated failure response
-- Every request waits 2 seconds to simulate network delay
 
 ## Run
 

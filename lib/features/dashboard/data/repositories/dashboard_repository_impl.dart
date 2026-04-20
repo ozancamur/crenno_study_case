@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 
+import '../../../../core/network/errors/app_exception.dart';
+import '../../../../core/network/errors/dio_error_handler.dart';
 import '../../domain/entities/claim_request.dart';
 import '../../domain/entities/claim_submission_result.dart';
 import '../../domain/entities/policy.dart';
@@ -13,8 +15,16 @@ class DashboardRepositoryImpl implements DashboardRepository {
 
   @override
   Future<List<Policy>> getPolicies() async {
-    final models = await _remoteDataSource.fetchPolicies();
-    return models.map((model) => model.toEntity()).toList();
+    try {
+      final models = await _remoteDataSource.fetchPolicies();
+      return models.map((model) => model.toEntity()).toList();
+    } on DioException catch (error) {
+      throw DioErrorHandler.toAppException(error);
+    } on FormatException catch (error) {
+      throw AppException(error.message);
+    } catch (_) {
+      throw const AppException('Policies could not be loaded.');
+    }
   }
 
   @override
@@ -22,12 +32,16 @@ class DashboardRepositoryImpl implements DashboardRepository {
     try {
       return await _remoteDataSource.submitClaim(request);
     } on DioException catch (error) {
-      final message = error.response?.data is Map<String, dynamic>
-          ? (error.response?.data['message']?.toString() ??
-              'Claim submission failed.')
-          : 'Claim submission failed.';
-
-      return ClaimSubmissionResult(success: false, message: message);
+      final appException = DioErrorHandler.toAppException(error);
+      return ClaimSubmissionResult(
+        success: false,
+        message: appException.message,
+      );
+    } catch (_) {
+      return const ClaimSubmissionResult(
+        success: false,
+        message: 'Claim submission failed.',
+      );
     }
   }
 }

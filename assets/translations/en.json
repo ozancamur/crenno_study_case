@@ -19,7 +19,5 @@
   "policy_title": "Policy",
   "policy_start_date": "Start date",
   "policy_end_date": "End date",
-  "policy_coverage": "Coverage",
-  "common_english": "English",
-  "common_turkish": "Turkish"
+  "policy_coverage": "Coverage"
 }
