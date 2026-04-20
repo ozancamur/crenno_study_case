@@ -4,14 +4,14 @@ import 'package:crenno_study_case/core/di/app_dependencies.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class MainApp extends StatefulWidget {
-  const MainApp({super.key});
+class InsuranceApp extends StatefulWidget {
+  const InsuranceApp({super.key});
 
   @override
-  State<MainApp> createState() => _MainAppState();
+  State<InsuranceApp> createState() => _InsuranceAppState();
 }
 
-class _MainAppState extends State<MainApp> {
+class _InsuranceAppState extends State<InsuranceApp> {
   late final AppDependencies _dependencies;
 
   @override
