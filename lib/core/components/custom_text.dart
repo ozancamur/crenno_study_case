@@ -1,3 +1,4 @@
+import 'package:crenno_study_case/core/utils/string_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/font_size_enum.dart';
@@ -37,7 +38,7 @@ class CustomText extends StatelessWidget {
     final fontSize = size?.value.first;
 
     return Text(
-      text,
+      tr ? text.translate : text,
       maxLines: maxLine,
       textAlign: align,
       overflow: overflow,

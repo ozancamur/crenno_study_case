@@ -37,7 +37,5 @@ class DioService {
 
   Dio get dio => _dio;
 
-  void setAcceptLanguage(String languageCode) {
-    _dio.options.headers['Accept-Language'] = languageCode;
-  }
+
 }
