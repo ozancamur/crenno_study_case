@@ -9,7 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  # STATE MANAGEMENT
+  flutter_bloc: ^9.1.1
+  # NETWORK
+  dio: ^5.9.2
+  # ROUTE
+  go_router: ^17.2.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
