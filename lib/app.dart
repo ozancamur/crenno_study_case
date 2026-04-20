@@ -29,10 +29,7 @@ class _MainAppState extends State<MainApp> {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF005C9C)),
-        useMaterial3: true,
-      ),
+      theme: ThemeData(useMaterial3: false),
     );
   }
 }
