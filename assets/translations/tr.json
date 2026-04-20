@@ -1,0 +1,21 @@
+{
+  "app_title": "Sigorta Uygulaması MVP",
+  "dashboard_title": "Poliçelerim",
+  "dashboard_empty_title": "Poliçe bulunamadı",
+  "dashboard_empty_description": "Bu hesap için aktif bir sigorta poliçesi bulunmuyor.",
+  "dashboard_error_title": "Bir şeyler ters gitti",
+  "dashboard_error_description": "Poliçeler yüklenemedi.",
+  "common_refresh": "Yenile",
+  "common_try_again": "Tekrar dene",
+  "claim_form_title": "Hasar Talebi Oluştur",
+  "claim_policy_label": "Poliçe",
+  "claim_select_incident_date": "Hasar tarihini seç",
+  "claim_incident_date_required": "Hasar tarihi zorunludur.",
+  "claim_incident_description_label": "Hasar açıklaması",
+  "claim_incident_description_required": "Hasar açıklaması zorunludur.",
+  "claim_submit_button": "Talep Gönder",
+  "policy_title": "Poliçe",
+  "policy_start_date": "Başlangıç tarihi",
+  "policy_end_date": "Bitiş tarihi",
+  "policy_coverage": "Teminat"
+}

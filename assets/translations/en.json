@@ -1,0 +1,21 @@
+{
+  "app_title": "Insurance App MVP",
+  "dashboard_title": "My Policies",
+  "dashboard_empty_title": "No policy found",
+  "dashboard_empty_description": "There is no active insurance policy for this account.",
+  "dashboard_error_title": "Something went wrong",
+  "dashboard_error_description": "Policies could not be loaded.",
+  "common_refresh": "Refresh",
+  "common_try_again": "Try again",
+  "claim_form_title": "Submit Damage Claim",
+  "claim_policy_label": "Policy",
+  "claim_select_incident_date": "Select incident date",
+  "claim_incident_date_required": "Incident date is required.",
+  "claim_incident_description_label": "Incident description",
+  "claim_incident_description_required": "Incident description is required.",
+  "claim_submit_button": "Submit Claim",
+  "policy_title": "Policy",
+  "policy_start_date": "Start date",
+  "policy_end_date": "End date",
+  "policy_coverage": "Coverage"
+}
