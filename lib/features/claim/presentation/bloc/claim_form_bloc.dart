@@ -1,26 +1,24 @@
 import 'package:bloc/bloc.dart';
+import 'package:crenno_study_case/features/dashboard/data/datasources/dashboard_remote_data_source.dart';
+import 'package:crenno_study_case/features/dashboard/data/repositories/dashboard_repository_impl.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:crenno_study_case/features/dashboard/domain/entities/claim_request.dart';
-import 'package:crenno_study_case/features/dashboard/domain/usecases/submit_claim.dart';
+import '../../../dashboard/domain/entities/claim_request.dart';
+import '../../../dashboard/domain/usecases/submit_claim.dart';
 
 part 'claim_form_event.dart';
 part 'claim_form_state.dart';
 
 class ClaimFormBloc extends Bloc<ClaimFormEvent, ClaimFormState> {
-  ClaimFormBloc({
-    required String policyId,
-    required SubmitClaim submitClaim,
-  })  : _policyId = policyId,
-        _submitClaim = submitClaim,
-        super(const ClaimFormState()) {
+  final String _policyId;
+  ClaimFormBloc({required String policyId})
+    : _policyId = policyId,
+      super(const ClaimFormState()) {
     on<ClaimDateChanged>(_onDateChanged);
     on<ClaimDescriptionChanged>(_onDescriptionChanged);
     on<ClaimSubmitted>(_onSubmitted);
   }
-
-  final String _policyId;
-  final SubmitClaim _submitClaim;
 
   void _onDateChanged(ClaimDateChanged event, Emitter<ClaimFormState> emit) {
     emit(
@@ -70,13 +68,16 @@ class ClaimFormBloc extends Bloc<ClaimFormEvent, ClaimFormState> {
       ),
     );
 
-    final result = await _submitClaim(
-      ClaimRequest(
-        policyId: _policyId,
-        incidentDate: state.incidentDate!,
-        description: state.description.trim(),
-      ),
-    );
+    final result =
+        await SubmitClaim(
+          DashboardRepositoryImpl(DashboardRemoteDataSourceImpl(Dio())),
+        ).call(
+          ClaimRequest(
+            policyId: _policyId,
+            incidentDate: state.incidentDate!,
+            description: state.description.trim(),
+          ),
+        );
 
     if (result.success) {
       emit(

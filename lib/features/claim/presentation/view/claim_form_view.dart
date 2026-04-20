@@ -6,7 +6,6 @@ import 'package:crenno_study_case/features/claim/presentation/widgets/claim_form
 import 'package:crenno_study_case/features/claim/presentation/widgets/claim_form_loading_state.dart';
 import 'package:crenno_study_case/features/claim/presentation/widgets/claim_form_success_state.dart';
 import 'package:crenno_study_case/features/dashboard/domain/entities/policy.dart';
-import 'package:crenno_study_case/features/dashboard/domain/usecases/submit_claim.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -15,17 +14,15 @@ class ClaimFormView extends StatelessWidget {
   const ClaimFormView({
     super.key,
     required this.policy,
-    required this.submitClaim,
   });
 
   final Policy policy;
-  final SubmitClaim submitClaim;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          ClaimFormBloc(policyId: policy.id, submitClaim: submitClaim),
+          ClaimFormBloc(policyId: policy.id),
       child: Scaffold(
         appBar: AppBar(
           title: CustomText(

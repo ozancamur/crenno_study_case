@@ -7,6 +7,10 @@ sealed class DashboardEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-final class DashboardPoliciesRequested extends DashboardEvent {
-  const DashboardPoliciesRequested();
+final class FetchPoliciesEvent extends DashboardEvent {
+  const FetchPoliciesEvent();
+}
+
+final class RefreshPoliciesEvent extends DashboardEvent {
+  const RefreshPoliciesEvent();
 }

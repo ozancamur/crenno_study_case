@@ -1,24 +1,19 @@
 import 'package:bloc/bloc.dart';
-import 'package:crenno_study_case/core/network/errors/app_exception.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/network/errors/app_exception.dart';
 import '../../domain/entities/policy.dart';
-import '../../domain/usecases/get_policies.dart';
 
 part 'dashboard_event.dart';
 part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
-  DashboardBloc({required GetPolicies getPolicies})
-    : _getPolicies = getPolicies,
-      super(const DashboardState()) {
-    on<DashboardPoliciesRequested>(_onPoliciesRequested);
+  DashboardBloc() : super(const DashboardState()) {
+    on<FetchPoliciesEvent>(_onPoliciesRequested);
   }
 
-  final GetPolicies _getPolicies;
-
   Future<void> _onPoliciesRequested(
-    DashboardPoliciesRequested event,
+    FetchPoliciesEvent event,
     Emitter<DashboardState> emit,
   ) async {
     emit(
@@ -30,11 +25,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     );
 
     try {
-      final policies = await _getPolicies();
+      //final policies = await GetPolicies().call();
       emit(
         state.copyWith(
           status: DashboardStatus.loaded,
-          policies: policies,
+          policies: [],
           errorMessage: null,
         ),
       );
