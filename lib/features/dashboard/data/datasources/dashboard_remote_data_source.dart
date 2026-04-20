@@ -17,15 +17,15 @@ class DashboardRemoteDataSourceImpl implements DashboardRemoteDataSource {
 
   @override
   Future<List<PolicyModel>> fetchPolicies() async {
-    final response = await _dio.get<List<dynamic>>('/policies');
+    final response = await _dio.get<dynamic>('/policies');
     final data = response.data;
 
-    if (data == null) {
+    if (data is! List) {
       throw const FormatException('Policies payload is empty.');
     }
 
     return data
-        .map((item) => PolicyModel.fromMap(item as Map<String, dynamic>))
+        .map((item) => PolicyModel.fromMap(Map<String, dynamic>.from(item)))
         .toList();
   }
 

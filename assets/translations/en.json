@@ -7,6 +7,8 @@
   "dashboard_error_description": "Policies could not be loaded.",
   "common_refresh": "Refresh",
   "common_try_again": "Try again",
+  "common_english": "English",
+  "common_turkish": "Turkish",
   "claim_form_title": "Submit Damage Claim",
   "claim_policy_label": "Policy",
   "claim_select_incident_date": "Select incident date",
@@ -17,5 +19,7 @@
   "policy_title": "Policy",
   "policy_start_date": "Start date",
   "policy_end_date": "End date",
-  "policy_coverage": "Coverage"
+  "policy_coverage": "Coverage",
+  "common_english": "English",
+  "common_turkish": "Turkish"
 }

@@ -25,6 +25,10 @@ class DioService {
   factory DioService() => _instance;
 
   Dio get dio => _dio;
+
+  void setAcceptLanguage(String languageCode) {
+    _dio.options.headers['Accept-Language'] = languageCode;
+  }
 }
 
 class _MockInsuranceApiInterceptor extends Interceptor {
@@ -39,13 +43,23 @@ class _MockInsuranceApiInterceptor extends Interceptor {
 
     if (options.path == '/policies' && options.method == 'GET') {
       try {
-        final jsonString = await rootBundle.loadString('assets/mocks/policies.json');
-        final decoded = jsonDecode(jsonString) as List<dynamic>;
+        final jsonString = await rootBundle.loadString(
+          'assets/mocks/policies.json',
+        );
+        final decoded = jsonDecode(jsonString) as Map<String, dynamic>;
+        final languageHeader =
+            options.headers['Accept-Language']?.toString().toLowerCase() ??
+            'en';
+        final languageCode = languageHeader.startsWith('tr') ? 'tr' : 'en';
+
+        final localizedRoot = decoded[languageCode] as Map<String, dynamic>?;
+        final policiesNode = localizedRoot?['policies'];
+        final policies = _extractPolicies(policiesNode);
 
         handler.resolve(
           Response<dynamic>(
             requestOptions: options,
-            data: decoded,
+            data: policies,
             statusCode: 200,
           ),
         );
@@ -81,7 +95,8 @@ class _MockInsuranceApiInterceptor extends Interceptor {
               requestOptions: options,
               statusCode: 422,
               data: const {
-                'message': 'Claim could not be submitted. Please review details.',
+                'message':
+                    'Claim could not be submitted. Please review details.',
               },
             ),
           ),
@@ -100,5 +115,24 @@ class _MockInsuranceApiInterceptor extends Interceptor {
     }
 
     handler.next(options);
+  }
+
+  List<Map<String, dynamic>> _extractPolicies(dynamic policiesNode) {
+    if (policiesNode is! List) {
+      return <Map<String, dynamic>>[];
+    }
+
+    if (policiesNode.isNotEmpty && policiesNode.first is List) {
+      final nested = policiesNode.first as List<dynamic>;
+      return nested
+          .whereType<Map<String, dynamic>>()
+          .map((item) => Map<String, dynamic>.from(item))
+          .toList();
+    }
+
+    return policiesNode
+        .whereType<Map<String, dynamic>>()
+        .map((item) => Map<String, dynamic>.from(item))
+        .toList();
   }
 }

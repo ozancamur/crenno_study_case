@@ -9,12 +9,17 @@ final class StringConstants {
   static const String dashboardErrorDescription = 'dashboard_error_description';
   static const String commonRefresh = 'common_refresh';
   static const String commonTryAgain = 'common_try_again';
+  static const String commonEnglish = 'common_english';
+  static const String commonTurkish = 'common_turkish';
   static const String claimFormTitle = 'claim_form_title';
   static const String claimPolicyLabel = 'claim_policy_label';
   static const String claimSelectIncidentDate = 'claim_select_incident_date';
-  static const String claimIncidentDateRequired = 'claim_incident_date_required';
-  static const String claimIncidentDescriptionLabel = 'claim_incident_description_label';
-  static const String claimIncidentDescriptionRequired = 'claim_incident_description_required';
+  static const String claimIncidentDateRequired =
+      'claim_incident_date_required';
+  static const String claimIncidentDescriptionLabel =
+      'claim_incident_description_label';
+  static const String claimIncidentDescriptionRequired =
+      'claim_incident_description_required';
   static const String claimSubmitButton = 'claim_submit_button';
   static const String policyTitle = 'policy_title';
   static const String policyStartDate = 'policy_start_date';

@@ -7,6 +7,8 @@
   "dashboard_error_description": "Poliçeler yüklenemedi.",
   "common_refresh": "Yenile",
   "common_try_again": "Tekrar dene",
+  "common_english": "İngilizce",
+  "common_turkish": "Türkçe",
   "claim_form_title": "Hasar Talebi Oluştur",
   "claim_policy_label": "Poliçe",
   "claim_select_incident_date": "Hasar tarihini seç",
@@ -17,5 +19,7 @@
   "policy_title": "Poliçe",
   "policy_start_date": "Başlangıç tarihi",
   "policy_end_date": "Bitiş tarihi",
-  "policy_coverage": "Teminat"
+  "policy_coverage": "Teminat",
+  "common_english": "İngilizce",
+  "common_turkish": "Türkçe"
 }

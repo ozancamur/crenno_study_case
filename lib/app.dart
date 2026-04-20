@@ -25,7 +25,7 @@ class _InsuranceAppState extends State<InsuranceApp> {
     return MaterialApp.router(
       routerConfig: router(_dependencies),
       debugShowCheckedModeBanner: false,
-      title: StringConstants.appTitle.tr(),
+      onGenerateTitle: (context) => StringConstants.appTitle.tr(),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
