@@ -1,5 +1,5 @@
 import 'package:crenno_study_case/core/constants/string_constants.dart';
-import 'package:crenno_study_case/core/widgets/state_card.dart';
+import 'package:crenno_study_case/core/components/state_card.dart';
 import 'package:flutter/material.dart';
 
 class DashboardErrorWidget extends StatelessWidget {
@@ -17,7 +17,7 @@ class DashboardErrorWidget extends StatelessWidget {
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
-        StateCard(
+        CustomStateCard(
           title: StringConstants.dashboardErrorTitle,
           description: message,
           actionLabel: StringConstants.commonTryAgain,

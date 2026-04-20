@@ -1,8 +1,9 @@
 import 'package:crenno_study_case/core/components/custom_text.dart';
+import 'package:crenno_study_case/core/utils/context_extension.dart';
 import 'package:flutter/material.dart';
 
-class StateCard extends StatelessWidget {
-  const StateCard({
+class CustomStateCard extends StatelessWidget {
+  const CustomStateCard({
     super.key,
     required this.title,
     required this.description,
@@ -21,9 +22,9 @@ class StateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-        margin: const EdgeInsets.all(20),
+        margin: EdgeInsets.all(context.width * 0.05),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(context.width * 0.04),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -32,14 +33,14 @@ class StateCard extends StatelessWidget {
                 weight: FontWeight.w600,
                 align: TextAlign.center,
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: context.height * 0.01),
               CustomText(
                 text: description,
                 tr: translateDescription,
                 align: TextAlign.center,
               ),
               if (actionLabel != null && onAction != null) ...[
-                const SizedBox(height: 12),
+                SizedBox(height: context.height * 0.015),
                 FilledButton(
                   onPressed: onAction,
                   child: CustomText(

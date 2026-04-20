@@ -1,7 +1,8 @@
 import 'package:crenno_study_case/core/components/custom_text.dart';
 import 'package:crenno_study_case/core/constants/string_constants.dart';
+import 'package:crenno_study_case/core/utils/context_extension.dart';
 import 'package:crenno_study_case/core/utils/string_extension.dart';
-import 'package:crenno_study_case/core/widgets/app_text_field.dart';
+import 'package:crenno_study_case/core/components/custom_text_field.dart';
 import 'package:crenno_study_case/features/claim/presentation/bloc/claim_form_bloc.dart';
 import 'package:crenno_study_case/features/dashboard/domain/entities/policy.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class ClaimFormBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(context.width * 0.04),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,7 +37,7 @@ class ClaimFormBody extends StatelessWidget {
                 '${StringConstants.claimPolicyLabel.translate}: ${policy.id} (${policy.type})',
             tr: false,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: context.height * 0.02),
           OutlinedButton.icon(
             onPressed: onPickDate,
             icon: const Icon(Icons.calendar_month),
@@ -49,14 +50,14 @@ class ClaimFormBody extends StatelessWidget {
           ),
           if (state.isDateInvalid)
             Padding(
-              padding: const EdgeInsets.only(top: 8),
+              padding: EdgeInsets.only(top: context.height * 0.01),
               child: CustomText(
                 text: StringConstants.claimIncidentDateRequired,
                 color: Theme.of(context).colorScheme.error,
               ),
             ),
-          const SizedBox(height: 16),
-          AppTextField(
+          SizedBox(height: context.height * 0.02),
+          CustomTextField(
             label: StringConstants.claimIncidentDescriptionLabel,
             maxLines: 4,
             errorText: state.isDescriptionInvalid
@@ -70,10 +71,12 @@ class ClaimFormBody extends StatelessWidget {
             child: FilledButton(
               onPressed: isLoading ? null : onSubmit,
               child: isLoading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
+                  ? SizedBox(
+                      width: context.width * 0.05,
+                      height: context.width * 0.05,
+                      child: CircularProgressIndicator(
+                        strokeWidth: context.width * 0.005,
+                      ),
                     )
                   : CustomText(
                       text: StringConstants.claimSubmitButton,

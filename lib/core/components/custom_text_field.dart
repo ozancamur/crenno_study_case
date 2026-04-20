@@ -1,8 +1,8 @@
 import 'package:crenno_study_case/core/utils/string_extension.dart';
 import 'package:flutter/material.dart';
 
-class AppTextField extends StatelessWidget {
-  const AppTextField({
+class CustomTextField extends StatelessWidget {
+  const CustomTextField({
     super.key,
     required this.label,
     required this.onChanged,

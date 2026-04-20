@@ -1,5 +1,6 @@
 import 'package:crenno_study_case/core/components/custom_text.dart';
 import 'package:crenno_study_case/core/constants/string_constants.dart';
+import 'package:crenno_study_case/core/utils/context_extension.dart';
 import 'package:crenno_study_case/core/utils/string_extension.dart';
 import 'package:crenno_study_case/features/dashboard/domain/entities/policy.dart';
 import 'package:flutter/material.dart';
@@ -22,14 +23,14 @@ class PolicyDetailView extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(context.width * 0.04),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomText(text: policy.type, tr: false, weight: FontWeight.w700),
-            const SizedBox(height: 8),
+            SizedBox(height: context.height * 0.01),
             CustomText(text: policy.description, tr: false),
-            const SizedBox(height: 16),
+            SizedBox(height: context.height * 0.02),
             CustomText(
               text:
                   '${StringConstants.policyStartDate.translate}: ${_formatDate(policy.startDate)}',

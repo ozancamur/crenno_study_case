@@ -1,5 +1,5 @@
 import 'package:crenno_study_case/core/constants/string_constants.dart';
-import 'package:crenno_study_case/core/widgets/state_card.dart';
+import 'package:crenno_study_case/core/components/state_card.dart';
 import 'package:flutter/material.dart';
 
 class DashboardEmptyWidget extends StatelessWidget {
@@ -12,7 +12,7 @@ class DashboardEmptyWidget extends StatelessWidget {
     return ListView(
       physics: const AlwaysScrollableScrollPhysics(),
       children: [
-        StateCard(
+        CustomStateCard(
           title: StringConstants.dashboardEmptyTitle,
           description: StringConstants.dashboardEmptyDescription,
           actionLabel: StringConstants.commonRefresh,

@@ -1,4 +1,5 @@
 import 'package:crenno_study_case/core/components/custom_text.dart';
+import 'package:crenno_study_case/core/utils/context_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/policy.dart';
@@ -16,9 +17,9 @@ class DashboardLoadedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(context.width * 0.04),
       itemCount: policies.length,
-      separatorBuilder: (_, index) => const SizedBox(height: 12),
+      separatorBuilder: (_, index) => SizedBox(height: context.height * 0.015),
       itemBuilder: (context, index) {
         final policy = policies[index];
         return Card(

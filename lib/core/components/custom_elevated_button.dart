@@ -28,7 +28,7 @@ class CustomElevatedButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(width ?? context.width, height ?? context.height * .1),
+        fixedSize: Size(width ?? context.width, height ?? context.height * 0.1),
         elevation: 0,
         backgroundColor: color,
         overlayColor: Colors.white,
@@ -38,7 +38,7 @@ class CustomElevatedButton extends StatelessWidget {
             width: borderWidth ?? 0,
             color: borderColor ?? Colors.transparent,
           ),
-          borderRadius: BorderRadius.circular(radius ?? 100),
+          borderRadius: BorderRadius.circular(radius ?? context.width * 0.25),
         ),
       ),
       child: child,
