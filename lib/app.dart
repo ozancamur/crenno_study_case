@@ -23,7 +23,7 @@ class _InsuranceAppState extends State<InsuranceApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: buildRouter(_dependencies),
+      routerConfig: router(_dependencies),
       debugShowCheckedModeBanner: false,
       title: StringConstants.appTitle.tr(),
       localizationsDelegates: context.localizationDelegates,

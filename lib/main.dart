@@ -12,8 +12,8 @@ Future<void> main() async {
   runApp(
     EasyLocalization(
       supportedLocales: LocaleEnum.values.map((e) => e.locale).toList(),
-      path: AppConstants.localizationPath,
-      fallbackLocale: LocaleEnum.en.locale,
+      path: AppConstants.LOCALIZATION_PATH,
+      fallbackLocale: LocaleEnum.EN.locale,
       child: const InsuranceApp(),
     ),
   );
