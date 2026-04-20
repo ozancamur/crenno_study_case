@@ -1,166 +1,104 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 
 class DioService {
-  late Dio _dio;
-  static const String BASE_URL = '';
-
-  static final DioService _instance = DioService._internal();
-  factory DioService() => _instance;
-
   DioService._internal() {
-    _initalize();
-  }
-
-  void _initalize() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: BASE_URL,
+        baseUrl: 'https://mock.insurance.app',
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
-        headers: {
+        headers: const {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
       ),
     );
-
-    _initializeInterceptors();
+    _dio.interceptors.add(_MockInsuranceApiInterceptor());
   }
 
-  void _initializeInterceptors() {
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) {
-          if (kDebugMode) {
-            debugPrint('=======================REQUEST=======================');
-            debugPrint("[REQUEST] => [${options.method}]");
-            debugPrint('-----------------------------------------------------');
-            debugPrint("[PATH] => [${options.baseUrl}${options.path}]");
-            debugPrint('-----------------------------------------------------');
-            debugPrint("[DATA] => [${options.data}]");
-            debugPrint('-----------------------------------------------------');
-            debugPrint("[QUERY] => [${options.queryParameters}]");
-            debugPrint('=======================REQUEST=======================');
-          }
-          handler.next(options);
-        },
-        onResponse: (response, handler) {
-          if (kDebugMode) {
-            debugPrint('======================RESPONSE======================');
-            debugPrint("[STATUS CODE] => [${response.statusCode}]");
-            debugPrint('----------------------------------------------------');
-            debugPrint("[DATA] => [${response.data}]");
-            debugPrint('======================RESPONSE======================');
-          }
-          handler.next(response);
-        },
-        onError: (error, handler) {
-          if (kDebugMode) {
-            debugPrint('=======================ERROR=======================');
-            debugPrint("[STATUS CODE] => [${error.response?.statusCode}]");
-            debugPrint('---------------------------------------------------');
-            debugPrint("[MESSAGE] => [${error.response?.data}]");
-            debugPrint('=======================ERROR=======================');
-          }
-          handler.next(error);
-        },
-      ),
-    );
-  }
+  late final Dio _dio;
 
-  Future<Response> get(
-    String path, {
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-  }) async {
-    return await _dio.get(
-      path,
-      queryParameters: queryParameters,
-      options: options,
-    );
-  }
+  static final DioService _instance = DioService._internal();
+  factory DioService() => _instance;
 
-  Future<Response> post(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-  }) async {
-    return await _dio.post(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: options,
-    );
-  }
+  Dio get dio => _dio;
+}
 
-  Future<Response> put(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-  }) async {
-    return await _dio.put(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: options,
-    );
-  }
+class _MockInsuranceApiInterceptor extends Interceptor {
+  static const _networkDelay = Duration(seconds: 2);
 
-  Future<Response> delete(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-  }) async {
-    return await _dio.delete(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: options,
-    );
-  }
+  @override
+  Future<void> onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
+    await Future<void>.delayed(_networkDelay);
 
-  Future<Response> patch(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-  }) async {
-    return await _dio.patch(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: options,
-    );
-  }
+    if (options.path == '/policies' && options.method == 'GET') {
+      try {
+        final jsonString = await rootBundle.loadString('assets/mocks/policies.json');
+        final decoded = jsonDecode(jsonString) as List<dynamic>;
 
-  Future<Response> uploadFile(
-    String path, {
-    required FormData formData,
-    Map<String, dynamic>? queryParameters,
-    Options? options,
-  }) async {
-    return await _dio.post(
-      path,
-      data: formData,
-      queryParameters: queryParameters,
-      options:
-          options ?? Options(headers: {'Content-Type': 'multipart/form-data'}),
-    );
-  }
+        handler.resolve(
+          Response<dynamic>(
+            requestOptions: options,
+            data: decoded,
+            statusCode: 200,
+          ),
+        );
+        return;
+      } catch (_) {
+        handler.reject(
+          DioException(
+            requestOptions: options,
+            type: DioExceptionType.badResponse,
+            response: Response<dynamic>(
+              requestOptions: options,
+              statusCode: 500,
+              data: const {'message': 'Failed to parse policies payload.'},
+            ),
+          ),
+        );
+        return;
+      }
+    }
 
-  void setHeader(String key, String value) {
-    _dio.options.headers[key] = value;
-  }
+    if (options.path == '/claims' && options.method == 'POST') {
+      final payload = options.data;
+      final description = payload is Map<String, dynamic>
+          ? (payload['description']?.toString() ?? '')
+          : '';
 
-  void setToken(String token) {
-    _dio.options.headers['Authorization'] = 'Bearer $token';
-  }
+      if (description.toLowerCase().contains('error')) {
+        handler.reject(
+          DioException(
+            requestOptions: options,
+            type: DioExceptionType.badResponse,
+            response: Response<dynamic>(
+              requestOptions: options,
+              statusCode: 422,
+              data: const {
+                'message': 'Claim could not be submitted. Please review details.',
+              },
+            ),
+          ),
+        );
+        return;
+      }
 
-  void removeToken() {
-    _dio.options.headers.remove('Authorization');
+      handler.resolve(
+        Response<dynamic>(
+          requestOptions: options,
+          statusCode: 201,
+          data: const {'message': 'Claim submitted successfully.'},
+        ),
+      );
+      return;
+    }
+
+    handler.next(options);
   }
 }
