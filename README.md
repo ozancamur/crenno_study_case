@@ -1,43 +1,24 @@
-# Insurance Mobile App MVP
+# CRENNO Study Case
 
-Flutter case study implementation for insurance policy listing and damage claim submission.
 
-## Architecture
+## MİMARİ VE TASARIM
+**Clean Architecture** prensiplerine uygun olarak **Feature-First** (özellik öncelikli) klasör yapısıyla kurgulanmıştır.
 
-This project uses **Clean Architecture** with a feature-first structure.
+### Katmanlar:
+* **DOMAIN:** Entities, Use Case'leri ve Repository arayüzlerini içerir.
+* **DATA:** API entegrasyonu yönetir. **Dio** kullanılarak Repository implementasyonları ve datasources bu katmanda tutulur.
+* **PRESENTATION:** BLoC tarafından yönetilen UI mantığını ve widget'ları içerir.
 
-- `presentation`: UI widgets, screens, and BLoC state management.
-- `domain`: entities, repository contracts, and use cases.
-- `data`: datasource, models, and repository implementation.
+## Kullanılan Teknolojiler
+* **STATE MANAGEMENT:** Durum yönetimi için [BLoC](https://pub.dev/packages/flutter_bloc) tercih edilmiştir.
+* **ROUTE:** Rota yönetimi için [GoRouter](https://pub.dev/packages/go_router) kullanılmıştır.
+* **NETWORK:** Gelişmiş hata yönetimi ve interceptor desteği için [Dio](https://pub.dev/packages/dio) kullanılmıştır.
+* **DEPENDENCY INJECTION(DI):** Servis yönetimi için GetIt kullanılmıştır.
+* **MOCK DATA:** Poliçe verilerini asenkron olarak çekmek için **Mocky** üzerinde 2 adet endpoint oluşturulmuştur.
 
-Selected stack:
-
-- State management: `bloc` / `flutter_bloc`
-- Routing: `go_router`
-- Networking: `dio`
-
-## Features
-
-- Dashboard policy list (`GET /policies`) with async loading.
-- Loading, error, and retry states.
-- Policy detail screen with coverage and policy dates.
-- Claim form (`POST /claims`) with:
-  - incident date picker
-  - incident description field
-  - required field validation
-  - success/error feedback
-
-## Run
-
-```bash
-flutter pub get
-flutter run
-```
-
-## Tests
-
-```bash
-flutter test
-```
-
-Coverage includes repository and BLoC state transition scenarios for dashboard and claim form.
+## Özellikler
+* **DASHBOARD:** Aktif poliçelerin (Araç, Sağlık, Konut) listelenmesi ve asenkron veri çekimi.
+* **POLICY DETAIL:** Poliçe kapsamı ve tarih bilgilerinin detaylı gösterimi.
+* **CLAIM:** * Olay tarihi seçimi için **DatePicker**.
+    * Zorunlu alanlar için gelişmiş form validasyonu.
+* **ERROR & LOADING:** API istekleri sırasında kullanıcıya sunulan yükleme animasyonları ve hata ekranları.
