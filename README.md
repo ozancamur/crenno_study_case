@@ -15,10 +15,3 @@
 * **NETWORK:** Gelişmiş hata yönetimi ve interceptor desteği için [Dio](https://pub.dev/packages/dio) kullanılmıştır.
 * **DEPENDENCY INJECTION(DI):** Servis yönetimi için [GetIt](https://pub.dev/packages/get_it) kullanılmıştır.
 * **MOCK DATA:** Poliçe verilerini asenkron olarak çekmek için **Mocky** üzerinde 2 adet endpoint oluşturulmuştur.
-
-## Özellikler
-* **DASHBOARD:** Aktif poliçelerin (Araç, Sağlık, Konut) listelenmesi ve asenkron veri çekimi.
-* **POLICY DETAIL:** Poliçe kapsamı ve tarih bilgilerinin detaylı gösterimi.
-* **CLAIM:** * Olay tarihi seçimi için **DatePicker**.
-    * Zorunlu alanlar için gelişmiş form validasyonu.
-* **ERROR & LOADING:** API istekleri sırasında kullanıcıya sunulan yükleme animasyonları ve hata ekranları.
