@@ -5,4 +5,6 @@ extension ContextExtension on BuildContext {
 
   double get width => _size.width;
   double get height => _size.height;
+
+  ColorScheme get colors => Theme.of(this).colorScheme;
 }

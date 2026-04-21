@@ -1,3 +1,4 @@
+import 'package:crenno_study_case/core/constants/api.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -5,7 +6,7 @@ class DioService {
   DioService._internal() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'https://api.mocki.io/v2/lmq7m91k',
+        baseUrl: ApiConstants.BASE_URL,
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
         headers: const {
@@ -36,6 +37,4 @@ class DioService {
   factory DioService() => _instance;
 
   Dio get dio => _dio;
-
-
 }
