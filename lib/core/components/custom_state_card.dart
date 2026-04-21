@@ -1,4 +1,5 @@
 import 'package:crenno_study_case/core/components/custom_text.dart';
+import 'package:crenno_study_case/core/components/custom_filled_button.dart';
 import 'package:crenno_study_case/core/utils/context_extension.dart';
 import 'package:flutter/material.dart';
 
@@ -33,11 +34,11 @@ class CustomStateCard extends StatelessWidget {
             ),
             CustomText(text: description, align: TextAlign.center),
             if (actionLabel != null && onAction != null) ...[
-              FilledButton(
+              CustomFilledButton(
                 onPressed: onAction,
                 child: CustomText(
                   text: actionLabel!,
-                  color: Theme.of(context).colorScheme.inversePrimary,
+                  color: context.colors.inversePrimary,
                 ),
               ),
             ],

@@ -1,14 +1,28 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:crenno_study_case/core/utils/string_extension.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/font_size_enum.dart';
 
 class CustomText extends StatelessWidget {
+  final String text;
+  final Color? color;
+  final FontSizeEnum sizes;
+  final FontWeight? weight;
+  final TextAlign? align;
+  final int? maxLine;
+  final TextDecoration decoration;
+  final TextOverflow? overflow;
+  final String? family;
+  final double? height;
+  final bool tr;
+  final double spacing;
+
   const CustomText({
     super.key,
     required this.text,
     this.color,
-    this.size,
+    this.sizes = FontSizeEnum.MEDIUM,
     this.weight = FontWeight.w400,
     this.align,
     this.maxLine,
@@ -20,30 +34,15 @@ class CustomText extends StatelessWidget {
     this.spacing = 0,
   });
 
-  final String text;
-  final Color? color;
-  final FontSizeEnum? size;
-  final FontWeight? weight;
-  final TextAlign? align;
-  final int? maxLine;
-  final TextDecoration decoration;
-  final TextOverflow? overflow;
-  final String? family;
-  final double? height;
-  final bool tr;
-  final double spacing;
-
   @override
   Widget build(BuildContext context) {
-    final fontSize = size?.value.first;
-
-    return Text(
+    return AutoSizeText(
       tr ? text.translate : text,
+      presetFontSizes: sizes.value,
       maxLines: maxLine,
       textAlign: align,
       overflow: overflow,
       style: TextStyle(
-        fontSize: fontSize,
         decoration: decoration,
         color: color,
         fontWeight: weight,
