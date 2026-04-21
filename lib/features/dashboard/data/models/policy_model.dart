@@ -1,6 +1,13 @@
 import '../../domain/entities/policy.dart';
 
 class PolicyModel {
+  final String id;
+  final String type;
+  final DateTime startDate;
+  final DateTime endDate;
+  final double coverageAmount;
+  final String description;
+
   const PolicyModel({
     required this.id,
     required this.type,
@@ -9,13 +16,6 @@ class PolicyModel {
     required this.coverageAmount,
     required this.description,
   });
-
-  final String id;
-  final String type;
-  final DateTime startDate;
-  final DateTime endDate;
-  final double coverageAmount;
-  final String description;
 
   factory PolicyModel.fromMap(Map<String, dynamic> map) {
     return PolicyModel(

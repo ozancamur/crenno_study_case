@@ -1,7 +1,7 @@
-import 'package:crenno_study_case/core/components/custom_text.dart';
-import 'package:crenno_study_case/core/utils/context_extension.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/components/custom_text.dart';
+import '../../../../core/utils/context_extension.dart';
 import '../../domain/entities/policy.dart';
 
 class DashboardLoadedWidget extends StatelessWidget {

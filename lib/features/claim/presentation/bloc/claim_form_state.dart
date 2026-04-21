@@ -40,18 +40,19 @@ class ClaimFormState extends Equatable {
       status: status ?? this.status,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
       showValidationErrors: showValidationErrors ?? this.showValidationErrors,
-      successMessage:
-          clearSuccess ? null : (successMessage ?? this.successMessage),
+      successMessage: clearSuccess
+          ? null
+          : (successMessage ?? this.successMessage),
     );
   }
 
   @override
   List<Object?> get props => [
-        incidentDate,
-        description,
-        status,
-        errorMessage,
-        showValidationErrors,
-        successMessage,
-      ];
+    incidentDate,
+    description,
+    status,
+    errorMessage,
+    showValidationErrors,
+    successMessage,
+  ];
 }

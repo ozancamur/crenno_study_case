@@ -1,111 +1,66 @@
-import 'package:crenno_study_case/core/components/custom_text.dart';
-import 'package:crenno_study_case/core/constants/string_constants.dart';
-import 'package:crenno_study_case/features/claim/presentation/bloc/claim_form_bloc.dart';
-import 'package:crenno_study_case/features/claim/presentation/widgets/claim_form_error_state.dart';
-import 'package:crenno_study_case/features/claim/presentation/widgets/claim_form_idle_state.dart';
-import 'package:crenno_study_case/features/claim/presentation/widgets/claim_form_loading_state.dart';
-import 'package:crenno_study_case/features/claim/presentation/widgets/claim_form_success_state.dart';
-import 'package:crenno_study_case/features/dashboard/domain/entities/policy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class ClaimFormView extends StatelessWidget {
-  const ClaimFormView({
-    super.key,
-    required this.policy,
-  });
+import '../../../../core/components/custom_text.dart';
+import '../../../../core/di/app_dependencies.dart';
+import '../../../../core/utils/context_extension.dart';
+import '../../../dashboard/domain/entities/policy.dart';
+import '../bloc/claim_form_bloc.dart';
+import '../controller/claim_form_controller.dart';
+import '../widgets/claim_appbar.dart';
+import '../widgets/claim_form_body.dart';
+import '../widgets/claim_submit_button.dart';
 
+class ClaimFormView extends StatelessWidget {
   final Policy policy;
+  final ClaimFormController _controller = const ClaimFormController();
+  const ClaimFormView({super.key, required this.policy});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          ClaimFormBloc(policyId: policy.id),
-      child: Scaffold(
-        appBar: AppBar(
-          title: CustomText(
-            text: StringConstants.claimFormTitle,
-            color: Theme.of(context).colorScheme.onPrimary,
-            weight: FontWeight.w600,
-          ),
-        ),
-        body: BlocConsumer<ClaimFormBloc, ClaimFormState>(
-          listener: (context, state) {
-            if (state.status == ClaimFormStatus.success &&
-                state.successMessage != null) {
-              context.go('/');
-            }
+      create: (_) => sl<ClaimFormBloc>(param1: policy.id),
+      child: BlocConsumer<ClaimFormBloc, ClaimFormState>(
+        listener: (context, state) {
+          if (state.status == ClaimFormStatus.success &&
+              state.successMessage != null) {
+            context.go('/');
+          }
 
-            if (state.status == ClaimFormStatus.error &&
-                state.errorMessage != null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: CustomText(text: state.errorMessage!, tr: false),
-                ),
-              );
-            }
-          },
-          builder: (context, state) {
-            Future<void> onPickDate() async {
-              final now = DateTime.now();
-              final picked = await showDatePicker(
-                context: context,
-                initialDate: state.incidentDate ?? now,
-                firstDate: DateTime(now.year - 5),
-                lastDate: now,
-              );
-
-              if (picked != null && context.mounted) {
-                context.read<ClaimFormBloc>().add(ClaimDateChanged(picked));
-              }
-            }
-
-            void onDescriptionChanged(String value) {
-              context.read<ClaimFormBloc>().add(ClaimDescriptionChanged(value));
-            }
-
-            void onSubmit() {
-              context.read<ClaimFormBloc>().add(const ClaimSubmitted());
-            }
-
-            switch (state.status) {
-              case ClaimFormStatus.idle:
-                return ClaimFormIdleStateWidget(
-                  policy: policy,
-                  state: state,
-                  onPickDate: onPickDate,
-                  onDescriptionChanged: onDescriptionChanged,
-                  onSubmit: onSubmit,
-                );
-              case ClaimFormStatus.loading:
-                return ClaimFormLoadingStateWidget(
-                  policy: policy,
-                  state: state,
-                  onPickDate: onPickDate,
-                  onDescriptionChanged: onDescriptionChanged,
-                  onSubmit: onSubmit,
-                );
-              case ClaimFormStatus.success:
-                return ClaimFormSuccessStateWidget(
-                  policy: policy,
-                  state: state,
-                  onPickDate: onPickDate,
-                  onDescriptionChanged: onDescriptionChanged,
-                  onSubmit: onSubmit,
-                );
-              case ClaimFormStatus.error:
-                return ClaimFormErrorStateWidget(
-                  policy: policy,
-                  state: state,
-                  onPickDate: onPickDate,
-                  onDescriptionChanged: onDescriptionChanged,
-                  onSubmit: onSubmit,
-                );
-            }
-          },
-        ),
+          if (state.status == ClaimFormStatus.error &&
+              state.errorMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: CustomText(text: state.errorMessage!, tr: false),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          return Scaffold(
+            appBar: const ClaimAppbar(),
+            body: ClaimFormBody(
+              policy: policy,
+              state: state,
+              onPickDate: () => _controller.pickIncidentDate(context, state),
+              onDescriptionChanged: (value) =>
+                  _controller.onDescriptionChanged(context, value),
+            ),
+            bottomNavigationBar: SafeArea(
+              minimum: EdgeInsets.fromLTRB(
+                context.width * 0.04,
+                context.height * 0.01,
+                context.width * 0.04,
+                context.height * 0.02,
+              ),
+              child: ClaimSubmitButton(
+                isLoading: state.status == ClaimFormStatus.loading,
+                onSubmit: () => _controller.submit(context),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/config/router_paths.dart';
 import '../../../../core/constants/string_constants.dart';
+import '../../../../core/di/app_dependencies.dart';
 import '../bloc/dashboard_bloc.dart';
 import '../widgets/dashboard_appbar.dart';
 import '../widgets/dashboard_empty.dart';
@@ -17,32 +18,34 @@ class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          DashboardBloc()
-            ..add(const FetchPoliciesEvent()),
-      child: Scaffold(
-        appBar: DashboardAppbar(),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            context.read<DashboardBloc>().add(const FetchPoliciesEvent());
-          },
-          child: BlocBuilder<DashboardBloc, DashboardState>(
-            builder: (context, state) {
-              switch (state.status) {
-                case DashboardStatus.initial:
-                case DashboardStatus.loading:
-                  return const DashboardLoadingWidget();
+      create: (context) => sl<DashboardBloc>()..add(const FetchPoliciesEvent()),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: DashboardAppbar(),
+            body: RefreshIndicator(
+              onRefresh: () async {
+                context.read<DashboardBloc>().add(const RefreshPoliciesEvent());
+              },
+              child: BlocBuilder<DashboardBloc, DashboardState>(
+                builder: (context, state) {
+                  switch (state.status) {
+                    case DashboardStatus.initial:
+                    case DashboardStatus.loading:
+                      return const DashboardLoadingWidget();
 
-                case DashboardStatus.loaded:
-                  if (state.policies.isEmpty) return _empty(context);
-                  return _loaded(state, context);
+                    case DashboardStatus.loaded:
+                      if (state.policies.isEmpty) return _empty(context);
+                      return _loaded(state, context);
 
-                case DashboardStatus.error:
-                  return _error(context);
-              }
-            },
-          ),
-        ),
+                    case DashboardStatus.error:
+                      return _error(context);
+                  }
+                },
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -50,7 +53,7 @@ class DashboardView extends StatelessWidget {
   DashboardEmptyWidget _empty(BuildContext context) {
     return DashboardEmptyWidget(
       onRefresh: () {
-        context.read<DashboardBloc>().add(const FetchPoliciesEvent());
+        context.read<DashboardBloc>().add(const RefreshPoliciesEvent());
       },
     );
   }

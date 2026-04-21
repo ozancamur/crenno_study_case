@@ -1,6 +1,7 @@
-import 'package:crenno_study_case/core/constants/string_constants.dart';
-import 'package:crenno_study_case/core/components/custom_state_card.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/components/custom_state_card.dart';
+import '../../../../core/constants/string_constants.dart';
 
 class DashboardEmptyWidget extends StatelessWidget {
   const DashboardEmptyWidget({super.key, required this.onRefresh});
